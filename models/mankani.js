@@ -27,6 +27,9 @@ var mankaniSchema = new mongoose.Schema(
         },
         PARCEL_ID: {
             type: Number
+        },
+        TXID: {
+            type: String
         }
     },
     {

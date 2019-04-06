@@ -1,34 +1,37 @@
 var mongoose = require('mongoose');
-var buildingSchema = new mongoose.Schema(
+var parcelsSchema = new mongoose.Schema(
     {
         _id: {
             type: mongoose.Schema.Types.ObjectId,
         },
         PARCEL_ID: {
+            type: String
+        },
+        TRNS_ID: {
+            type: String
+        },
+        TRNS_TYPE_ID: {
             type: Number
         },
-        PERMIT_NO: {
-            type: Number
-        },
-        PROJECT_NO: {
+        TRNS_TYPE: {
             type: String
         },
-        PERMIT_DATE: {
+        DATE_STARTED: {
             type: String
         },
-        CONSULTANT_NAME_ARB: {
+        DATE_ENDED: {
             type: String
         },
-        CONSULTANT_NAME_ENG: {
+        ENTRY_UID: {
             type: String
         },
-        PERMIT_TYPE_ARB: {
+        ENTRY_WHEN: {
             type: String
         },
-        PERMIT_TYPE_ENG: {
-            type: Number
+        MOD_REASON: {
+            type: String
         },
-        WORK_DESCRIPTION: {
+        MOD_TYPE: {
             type: String
         },
         TXID: {
@@ -36,12 +39,12 @@ var buildingSchema = new mongoose.Schema(
         }
     },
     {
-        collection: 'Building'
+        collection: 'Parcels'
     },
     {
         timestamps: true
-    }
-    );
+    },
+);
 
-mongoose.model('Building', buildingSchema);
-module.exports = mongoose.model('Building', buildingSchema);
+mongoose.model('Parcels', parcelsSchema);
+module.exports = mongoose.model('Parcels', parcelsSchema);

@@ -14,5 +14,13 @@ router.get('/getMankani', async function(req, res, next) {
   let response = await queries.getMankani();
   res.status(200).send(response);
 });
+router.get('/getParcels', async function(req, res, next) {
+  let response = await queries.getParcels();
+  res.status(200).send(response);
+});
+router.get('/getZoning', async function(req, res, next) {
+  let response = await queries.getZoning();
+  res.status(200).send(response);
+});
 
 module.exports = router;
