@@ -70,6 +70,81 @@ var queries = {
                 });
         });
     },
+    saveMankani:function (data) {
+        return new Promise(function (resolve, reject) {
+            Mankani.create(data, function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "mankani": error
+                });
+                console.log("saveMankani",data)
+                return resolve({
+                    "status": true,
+                    "mankani": data
+                });
+            });
+        });
+    },
+    saveParcels:function (data) {
+        return new Promise(function (resolve, reject) {
+            Parcels.create(data, function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "Parcels": error
+                });
+                console.log("Parcels",data)
+                return resolve({
+                    "status": true,
+                    "Parcels": data
+                });
+            });
+        });
+    },
+    saveZoning:function (data) {
+        return new Promise(function (resolve, reject) {
+            Zoning.create(data, function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "Zoning": error
+                });
+                console.log("Zoning",data)
+                return resolve({
+                    "status": true,
+                    "Zoning": data
+                });
+            });
+        });
+    },
+    saveBuilding:function (data) {
+        return new Promise(function (resolve, reject) {
+            Building.create(data, function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "Building": error
+                });
+                console.log("Building",data)
+                return resolve({
+                    "status": true,
+                    "Building": data
+                });
+            });
+        });
+    },
+    saveBlockchain:function (data) {
+        return new Promise(function (resolve, reject) {
+            Blockchain.create(data, function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "Blockchain": error
+                });
+                console.log("Blockchain",data)
+                return resolve({
+                    "status": true,
+                    "Blockchain": data
+                });
+            });
+        });
+    },
 }
 
 module.exports = queries;

@@ -1,9 +1,6 @@
 var mongoose = require('mongoose');
 var blockchainSchema = new mongoose.Schema(
     {
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
-        },
         TRNS_ID: {
             type: Number
         },

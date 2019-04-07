@@ -1,9 +1,6 @@
 var mongoose = require('mongoose');
 var mankaniSchema = new mongoose.Schema(
     {
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
-        },
         CNAME_E: {
             type: String
         },

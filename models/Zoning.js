@@ -1,14 +1,11 @@
 var mongoose = require('mongoose');
 var zoningSchema = new mongoose.Schema(
     {
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
-        },
         PARCEL_ID: {
             type: String
         },
         ZONING_ID: {
-            type: String
+            type: Number
         },
         ZONING_CODE: {
             type: String

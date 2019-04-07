@@ -1,9 +1,6 @@
 var mongoose = require('mongoose');
 var parcelsSchema = new mongoose.Schema(
     {
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
-        },
         PARCEL_ID: {
             type: String
         },

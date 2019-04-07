@@ -1,14 +1,11 @@
 var mongoose = require('mongoose');
 var buildingSchema = new mongoose.Schema(
     {
-        _id: {
-            type: mongoose.Schema.Types.ObjectId,
-        },
         PARCEL_ID: {
-            type: Number
+            type: String
         },
         PERMIT_NO: {
-            type: Number
+            type: String
         },
         PROJECT_NO: {
             type: String
@@ -26,7 +23,7 @@ var buildingSchema = new mongoose.Schema(
             type: String
         },
         PERMIT_TYPE_ENG: {
-            type: Number
+            type: String
         },
         WORK_DESCRIPTION: {
             type: String
