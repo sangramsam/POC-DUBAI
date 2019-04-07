@@ -5,14 +5,14 @@ var cookieParser = require('cookie-parser');
 const bodyParser = require('body-parser');
 var logger = require('morgan');
 const cors = require('cors')
-
 var indexRouter = require('./routes/index');
-var usersRouter = require('./routes/users');
+var pocRouter = require('./routes/poc');
 
 var app = express();
 app.use(cors());
 //init mongo
 var db = require('./db');
+//Infura HttpProvider Endpoint
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -26,7 +26,7 @@ app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
 
 app.use('/', indexRouter);
-app.use('/poc', usersRouter);
+app.use('/poc', pocRouter);
 // init mongo db
 var db = require('./db');
 // catch 404 and forward to error handler
