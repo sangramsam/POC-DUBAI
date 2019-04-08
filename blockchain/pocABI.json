@@ -1,0 +1,138 @@
+[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "build",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "CONSULTANT_NAME_ARB",
+        "type": "string"
+      },
+      {
+        "name": "CONSULTANT_NAME_ENG",
+        "type": "string"
+      },
+      {
+        "name": "PERMIT_TYPE_ENG",
+        "type": "string"
+      },
+      {
+        "name": "PERMIT_TYPE_ARB",
+        "type": "string"
+      },
+      {
+        "name": "WORK_DESCRIPTION",
+        "type": "string"
+      }
+    ],
+    "name": "createNewBuilding",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "makani",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "CNAME_E",
+        "type": "string"
+      }
+    ],
+    "name": "createNewMakani",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "parc",
+        "type": "bytes32[]"
+      }
+    ],
+    "name": "createNewParcles",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "Zone",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "SETBACK_DESC_ENGLISH",
+        "type": "string"
+      },
+      {
+        "name": "SETBACK_DESC_ARABIC",
+        "type": "string"
+      }
+    ],
+    "name": "createNewZoning",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "msg",
+        "type": "bytes32"
+      }
+    ],
+    "name": "buildingAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "msg",
+        "type": "bytes32"
+      }
+    ],
+    "name": "ZoningAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "msg",
+        "type": "bytes32"
+      }
+    ],
+    "name": "mankaniAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "msg",
+        "type": "bytes32"
+      }
+    ],
+    "name": "parcelsAdded",
+    "type": "event"
+  }
+]

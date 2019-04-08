@@ -3,6 +3,7 @@ const Building = require('../models/Building');
 const Mankani = require('../models/mankani');
 const Parcels = require('../models/Parcels');
 const Zoning = require('../models/Zoning');
+const User = require('../models/user');
 
 var queries = {
     getBlockchain: function () {
@@ -141,6 +142,20 @@ var queries = {
                 return resolve({
                     "status": true,
                     "Blockchain": data
+                });
+            });
+        });
+    },
+    saveUser:function (data) {
+        return new Promise(function (resolve, reject) {
+            User.create(data, function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "User": error
+                });
+                return resolve({
+                    "status": true,
+                    "User": data
                 });
             });
         });
