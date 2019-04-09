@@ -33,6 +33,12 @@ var parcelsSchema = new mongoose.Schema(
         },
         TXID: {
             type: String
+        },
+        address:{
+            type:String
+        },
+        username:{
+            type:String
         }
     },
     {

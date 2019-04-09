@@ -37,10 +37,10 @@ router.post('/addUser', async function (req, res, next) {
     let user = await queries.saveUser(req.body);
     return res.status(200).send(user);
 });
-router.post('/sendTransaction', async function (req, res, next) {
+router.get('/blockExplorer', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
-    let user = await sendTransaction.sendTx(req.body);
-    return res.status(200).send(user);
+    let blockEx = await queries.getBlockExplorer();
+    return res.status(200).send(blockEx);
 });
 router.post('/login', async function (req, res, next) {
     console.log("req",req.body);

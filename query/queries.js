@@ -4,19 +4,20 @@ const Mankani = require('../models/mankani');
 const Parcels = require('../models/Parcels');
 const Zoning = require('../models/Zoning');
 const User = require('../models/user');
-
+var _ = require('underscore');
+var q = require('q');
 var queries = {
     getBlockchain: function () {
         return new Promise(function (resolve, reject) {
             //console.log("Blockchain",Blockchain)
             Blockchain.find().exec(async function (err, data) {
                 //console.log("blockchain",blockchain)
-                    if (err) {
-                        resolve({"status": false, "data": err});
-                    } else {
-                        resolve({"status": true, "data": data});
-                    }
-                });
+                if (err) {
+                    resolve({"status": false, "data": err});
+                } else {
+                    resolve({"status": true, "data": data});
+                }
+            });
         });
     },
     getBuilding: function () {
@@ -24,12 +25,12 @@ var queries = {
             //console.log("Blockchain",Blockchain)
             Building.find().exec(async function (err, data) {
                 //console.log("blockchain",blockchain)
-                    if (err) {
-                        resolve({"status": false, "data": err});
-                    } else {
-                        resolve({"status": true, "data": data});
-                    }
-                });
+                if (err) {
+                    resolve({"status": false, "data": err});
+                } else {
+                    resolve({"status": true, "data": data});
+                }
+            });
         });
     },
     getMankani: function () {
@@ -37,44 +38,44 @@ var queries = {
             //console.log("Blockchain",Blockchain)
             Mankani.find({}).exec(async function (err, data) {
                 //console.log("blockchain",blockchain)
-                    if (err) {
-                        resolve({"status": false, "data": err});
-                    } else {
-                        resolve({"status": true, "data": data});
-                    }
-                });
+                if (err) {
+                    resolve({"status": false, "data": err});
+                } else {
+                    resolve({"status": true, "data": data});
+                }
+            });
         });
     },
     getParcels: function () {
         return new Promise(function (resolve, reject) {
             Parcels.find({}).exec(async function (err, data) {
-                    if (err) {
-                        resolve({"status": false, "data": err});
-                    } else {
-                        resolve({"status": true, "data": data});
-                    }
-                });
+                if (err) {
+                    resolve({"status": false, "data": err});
+                } else {
+                    resolve({"status": true, "data": data});
+                }
+            });
         });
     },
     getZoning: function () {
         return new Promise(function (resolve, reject) {
             Zoning.find({}).exec(async function (err, data) {
-                    if (err) {
-                        resolve({"status": false, "data": err});
-                    } else {
-                        resolve({"status": true, "data": data});
-                    }
-                });
+                if (err) {
+                    resolve({"status": false, "data": err});
+                } else {
+                    resolve({"status": true, "data": data});
+                }
+            });
         });
     },
-    saveMankani:function (data) {
+    saveMankani: function (data) {
         return new Promise(function (resolve, reject) {
             Mankani.create(data, function (error, data) {
                 if (error) return resolve({
                     "status": false,
                     "mankani": error
                 });
-                console.log("saveMankani",data)
+                console.log("saveMankani", data)
                 return resolve({
                     "status": true,
                     "mankani": data
@@ -82,14 +83,14 @@ var queries = {
             });
         });
     },
-    saveParcels:function (data) {
+    saveParcels: function (data) {
         return new Promise(function (resolve, reject) {
             Parcels.create(data, function (error, data) {
                 if (error) return resolve({
                     "status": false,
                     "Parcels": error
                 });
-                console.log("Parcels",data)
+                console.log("Parcels", data)
                 return resolve({
                     "status": true,
                     "Parcels": data
@@ -97,14 +98,14 @@ var queries = {
             });
         });
     },
-    saveZoning:function (data) {
+    saveZoning: function (data) {
         return new Promise(function (resolve, reject) {
             Zoning.create(data, function (error, data) {
                 if (error) return resolve({
                     "status": false,
                     "Zoning": error
                 });
-                console.log("Zoning",data)
+                console.log("Zoning", data)
                 return resolve({
                     "status": true,
                     "Zoning": data
@@ -112,14 +113,14 @@ var queries = {
             });
         });
     },
-    saveBuilding:function (data) {
+    saveBuilding: function (data) {
         return new Promise(function (resolve, reject) {
             Building.create(data, function (error, data) {
                 if (error) return resolve({
                     "status": false,
                     "Building": error
                 });
-                console.log("Building",data)
+                console.log("Building", data)
                 return resolve({
                     "status": true,
                     "Building": data
@@ -127,14 +128,14 @@ var queries = {
             });
         });
     },
-    saveBlockchain:function (data) {
+    saveBlockchain: function (data) {
         return new Promise(function (resolve, reject) {
             Blockchain.create(data, function (error, data) {
                 if (error) return resolve({
                     "status": false,
                     "Blockchain": error
                 });
-                console.log("Blockchain",data)
+                console.log("Blockchain", data)
                 return resolve({
                     "status": true,
                     "Blockchain": data
@@ -142,7 +143,7 @@ var queries = {
             });
         });
     },
-    saveUser:function (data) {
+    saveUser: function (data) {
         return new Promise(function (resolve, reject) {
             User.create(data, function (error, data) {
                 if (error) return resolve({
@@ -156,20 +157,20 @@ var queries = {
             });
         });
     },
-    login:function (data) {
-        console.log("data",data)
+    login: function (data) {
+        console.log("data", data)
         return new Promise(function (resolve, reject) {
-            User.find().where({Username: data.username,password: data.password}).exec(function (error, data) {
+            User.find().where({Username: data.username, password: data.password}).exec(function (error, data) {
                 if (error) return resolve({
                     "status": false,
                     "User": "username/password Incorrect"
                 });
-                if(data.length>0){
+                if (data.length > 0) {
                     return resolve({
                         "status": true,
                         "User": data
                     });
-                }else{
+                } else {
                     return resolve({
                         "status": false,
                         "User": "username/password Incorrect"
@@ -179,6 +180,18 @@ var queries = {
             });
         });
     },
+    getBlockExplorer: function () {
+        return new Promise(function (resolve, reject) {
+            var promises = [Mankani.find().where({TXID: {$exists: true}}).exec(), Building.find().where({TXID: {$exists: true}}).exec(), Zoning.find().where({TXID: {$exists: true}}).exec()]
+            q.all(promises).then(function (result) {
+                    //console.log("result", result);
+                    let totalResult = result[0].concat(result[1]);
+                    totalResult.concat(result[1])
+                    resolve(totalResult)
+                }
+            )
+        });
+    }
 }
 
 module.exports = queries;
