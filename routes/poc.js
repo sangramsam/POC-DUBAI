@@ -42,5 +42,13 @@ router.post('/sendTransaction', async function (req, res, next) {
     let user = await sendTransaction.sendTx(req.body);
     return res.status(200).send(user);
 });
+router.post('/login', async function (req, res, next) {
+    console.log("req",req.body);
+    console.log("req",req.body.username);
+    console.log("req",req.body.password);
+    if (!req.body || !req.body.username || !req.body.password) return res.status(500).send("Invalid Inputs!");
+    let user = await queries.login(req.body);
+    return res.status(200).send(user);
+});
 
 module.exports = router;

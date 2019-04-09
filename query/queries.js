@@ -47,9 +47,7 @@ var queries = {
     },
     getParcels: function () {
         return new Promise(function (resolve, reject) {
-            //console.log("Blockchain",Blockchain)
             Parcels.find({}).exec(async function (err, data) {
-                //console.log("blockchain",blockchain)
                     if (err) {
                         resolve({"status": false, "data": err});
                     } else {
@@ -60,9 +58,7 @@ var queries = {
     },
     getZoning: function () {
         return new Promise(function (resolve, reject) {
-            //console.log("Blockchain",Blockchain)
             Zoning.find({}).exec(async function (err, data) {
-                //console.log("blockchain",blockchain)
                     if (err) {
                         resolve({"status": false, "data": err});
                     } else {
@@ -157,6 +153,29 @@ var queries = {
                     "status": true,
                     "User": data
                 });
+            });
+        });
+    },
+    login:function (data) {
+        console.log("data",data)
+        return new Promise(function (resolve, reject) {
+            User.find().where({Username: data.username,password: data.password}).exec(function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "User": "username/password Incorrect"
+                });
+                if(data.length>0){
+                    return resolve({
+                        "status": true,
+                        "User": data
+                    });
+                }else{
+                    return resolve({
+                        "status": false,
+                        "User": "username/password Incorrect"
+                    });
+                }
+
             });
         });
     },

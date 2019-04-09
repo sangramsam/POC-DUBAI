@@ -13,6 +13,9 @@ var userSchema = new mongoose.Schema(
         address: {
             type: String
         },
+        privateKey: {
+            type: String
+        },
     },
     {
         timestamps: true
