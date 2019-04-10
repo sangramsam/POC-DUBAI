@@ -75,7 +75,7 @@ var queries = {
                     "status": false,
                     "mankani": error
                 });
-                console.log("saveMankani", data)
+                //console.log("saveMankani", data)
                 return resolve({
                     "status": true,
                     "mankani": data
@@ -90,7 +90,7 @@ var queries = {
                     "status": false,
                     "Parcels": error
                 });
-                console.log("Parcels", data)
+                //console.log("Parcels", data)
                 return resolve({
                     "status": true,
                     "Parcels": data
@@ -114,6 +114,7 @@ var queries = {
         });
     },
     saveBuilding: function (data) {
+        console.log("saveBuilding called");
         return new Promise(function (resolve, reject) {
             Building.create(data, function (error, data) {
                 if (error) return resolve({
