@@ -4,6 +4,7 @@ const Mankani = require('../models/mankani');
 const Parcels = require('../models/Parcels');
 const Zoning = require('../models/Zoning');
 const User = require('../models/user');
+const Certuser = require('../models/certuser');
 var _ = require('underscore');
 var q = require('q');
 var queries = {
@@ -159,9 +160,30 @@ var queries = {
         });
     },
     login: function (data) {
-        console.log("data", data)
         return new Promise(function (resolve, reject) {
             User.find().where({Username: data.username, password: data.password}).exec(function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "User": "username/password Incorrect"
+                });
+                if (data.length > 0) {
+                    return resolve({
+                        "status": true,
+                        "User": data
+                    });
+                } else {
+                    return resolve({
+                        "status": false,
+                        "User": "username/password Incorrect"
+                    });
+                }
+
+            });
+        });
+    },
+    certLogin: function (data) {
+        return new Promise(function (resolve, reject) {
+            Certuser.find().where({Username: data.username, password: data.password}).exec(function (error, data) {
                 if (error) return resolve({
                     "status": false,
                     "User": "username/password Incorrect"

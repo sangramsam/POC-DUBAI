@@ -7,6 +7,7 @@ var logger = require('morgan');
 const cors = require('cors')
 var indexRouter = require('./routes/index');
 var pocRouter = require('./routes/poc');
+var certRouter = require('./routes/cert');
 
 var app = express();
 app.use(cors());
@@ -22,11 +23,11 @@ app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
 app.use(cookieParser());
-app.use(bodyParser.urlencoded({limit: '5mb', extended: true}));
+app.use(bodyParser.urlencoded({limit: '100mb', extended: true}));
 app.use(express.static(path.join(__dirname, 'public')));
-
 app.use('/', indexRouter);
 app.use('/poc', pocRouter);
+app.use('/cert', certRouter);
 // init mongo db
 var db = require('./db');
 // catch 404 and forward to error handler

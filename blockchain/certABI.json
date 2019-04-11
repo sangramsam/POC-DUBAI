@@ -1,0 +1,32 @@
+[
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "cert",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "StudentName",
+        "type": "string"
+      }
+    ],
+    "name": "createNewCert",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "msg",
+        "type": "bytes32"
+      }
+    ],
+    "name": "certAdded",
+    "type": "event"
+  }
+]
