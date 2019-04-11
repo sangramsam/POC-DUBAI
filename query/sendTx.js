@@ -4,6 +4,7 @@ const Building = require('../models/Building');
 const Mankani = require('../models/mankani');
 const Parcels = require('../models/Parcels');
 const Zoning = require('../models/Zoning');
+var ObjectId = require('mongodb').ObjectId;
 web3js = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/7df47f101f15415d8fc4b729e9ed53a6"));
 const ABI = require('../blockchain/pocABI')
 const myPrivateKey = "DEE7895AF973BAEF1ACEA5F7A38A261B6B9B4A2534B390855119FAB832A0D78F";
@@ -39,22 +40,22 @@ var sendTransaction = {
             var transaction = new Tx(rawTransaction);
             //signing transaction with private key
             transaction.sign(privateKey);
-                web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex')).on('transactionHash', function (hash) {
-                    Mankani.findOneAndUpdate({
-                        MAKANI: data.MAKANI
-                    }, {
-                        $set: {
-                            TXID: hash,
-                        }
-                    }, {
-                        upsert: true,
-                        new: true,
-                        setDefaultsOnInsert: true
-                    }, function (error, response) {
-                        console.log("error", error)
-                        console.log("response", response)
-                    });
-                }).on('error', console.log);
+            web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex')).on('transactionHash', function (hash) {
+                Mankani.findOneAndUpdate({
+                    MAKANI: data.MAKANI
+                }, {
+                    $set: {
+                        TXID: hash,
+                    }
+                }, {
+                    upsert: true,
+                    new: true,
+                    setDefaultsOnInsert: true
+                }, function (error, response) {
+                    console.log("error", error)
+                    console.log("response", response)
+                });
+            }).on('error', console.log);
         });
     },
     sendBuilingTX: function (data) {
@@ -80,7 +81,7 @@ var sendTransaction = {
                     "from": myAddress,
                     "to": contractAddress,
                     "gasPrice": web3js.utils.toHex(20 * 1e9),
-                    "gasLimit": web3js.utils.toHex(210000),
+                    "gasLimit": web3js.utils.toHex(2100000),
                     "data": contract.methods.createNewBuilding([web3js.utils.fromAscii(data.PARCEL_ID), web3js.utils.fromAscii(data.PERMIT_NO), web3js.utils.fromAscii(data.PROJECT_NO), web3js.utils.fromAscii(data.PERMIT_DATE)], data.CONSULTANT_NAME_ARB, data.CONSULTANT_NAME_ENG, data.PERMIT_TYPE_ARB, data.PERMIT_TYPE_ENG, data.WORK_DESCRIPTION).encodeABI(),
                     "nonce": web3js.utils.toHex(count)
                 }
@@ -89,24 +90,36 @@ var sendTransaction = {
                 var transaction = new Tx(rawTransaction);
                 //signing transaction with private key
                 transaction.sign(privateKey);
-                //sending transacton via web3js module
                 web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'))
                     .on('transactionHash', function (hash) {
-                        Building.findOneAndUpdate({
-                            PERMIT_NO: data.PERMIT_NO
-                        }, {
-                            $set: {
-                                TXID: hash,
-                            }
-                        }, {
-                            upsert: true,
-                            new: false,
-                            setDefaultsOnInsert: true
-                        }, function (error, response) {
-                            console.log("response", response)
-                            resolve(response);
-                        });
-                    }).on('error', console.log);;
+                        if (data.update) {
+                            //console.log("if",hash)
+                            Building.findOne({"_id": ObjectId(data._id)}, function (err, building) {
+                                building.TXID = hash;
+                                building.save(function (err) {
+                                    if (err) {
+                                        console.log('ERROR!');
+                                    } else {
+                                        resolve(building);
+                                    }
+                                });
+                            });
+                        } else {
+                            //console.log("else",hash)
+                            Building.findOneAndUpdate({
+                                PERMIT_NO: data.PERMIT_NO
+                            }, {
+                                $set: {
+                                    TXID: hash,
+                                }
+                            }, function (error, response) {
+                                console.log("response", response)
+                                resolve(response);
+                            });
+                        }
+
+                    }).on('error', console.log);
+                ;
             })
         })
     },
@@ -146,20 +159,49 @@ var sendTransaction = {
                 //sending transacton via web3js module
                 web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'))
                     .on('transactionHash', function (hash) {
-                        Parcels.findOneAndUpdate({
-                            PARCEL_ID: data.PARCEL_ID
-                        }, {
-                            $set: {
-                                TXID: hash,
-                            }
-                        }, {
-                            upsert: true,
-                            new: true,
-                            setDefaultsOnInsert: true
-                        }, function (error, response) {
-                            resolve(response);
-                        });
-                    });
+                        // Parcels.findOneAndUpdate({
+                        //     PARCEL_ID: data.PARCEL_ID
+                        // }, {
+                        //     $set: {
+                        //         TXID: hash,
+                        //     }
+                        // }, {
+                        //     upsert: true,
+                        //     new: true,
+                        //     setDefaultsOnInsert: true
+                        // }, function (error, response) {
+                        //     resolve(response);
+                        // });
+                        if (data.update) {
+                            //console.log("if",hash)
+                            Parcels.findOne({"_id": ObjectId(data._id)}, function (err, parcels) {
+                                parcels.TXID = hash;
+                                parcels.save(function (err) {
+                                    if (err) {
+                                        console.log('ERROR!');
+                                    } else {
+                                        resolve(parcels);
+                                    }
+                                });
+                            });
+                        } else {
+                            //console.log("else",hash)
+                            Parcels.findOneAndUpdate({
+                                PARCEL_ID: data.PARCEL_ID
+                            }, {
+                                $set: {
+                                    TXID: hash,
+                                }
+                            }, {
+                                upsert: true,
+                                new: true,
+                                setDefaultsOnInsert: true
+                            }, function (error, response) {
+                                console.log("response", response)
+                                resolve(response);
+                            });
+                        }
+                    }).on('error', console.log);;
             })
         })
     },
@@ -186,7 +228,7 @@ var sendTransaction = {
                     "from": myAddress,
                     "to": contractAddress,
                     "gasPrice": web3js.utils.toHex(20 * 1e9),
-                    "gasLimit": web3js.utils.toHex(210000),
+                    "gasLimit": web3js.utils.toHex(2100000),
                     "data": contract.methods.createNewZoning([web3js.utils.fromAscii(data.PARCEL_ID), web3js.utils.fromAscii(data.ZONING_ID), web3js.utils.fromAscii(data.ENTRY_WHO), web3js.utils.fromAscii(data.HEIGHT_ID),
                         web3js.utils.fromAscii(data.HEIGHT_DESC_ENGLISH), web3js.utils.fromAscii(data.HEIGHT_DESC_ARABIC), web3js.utils.fromAscii(data.LANDUSE_ID), web3js.utils.fromAscii(data.LANDUSE_DESC_ENGLISH), web3js.utils.fromAscii(data.LANDUSE_DESC_ARABIC),
                         web3js.utils.fromAscii(data.ZONING_CODE), web3js.utils.fromAscii(data.ENTRY_WHEN)], data.SETBACK_DESC_ENGLISH, data.SETBACK_DESC_ARABIC).encodeABI(),
@@ -200,21 +242,34 @@ var sendTransaction = {
                 //sending transacton via web3js module
                 web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'))
                     .on('transactionHash', function (hash) {
-                        Zoning.findOneAndUpdate({
-                            ZONING_ID: data.ZONING_ID
-                        }, {
-                            $set: {
-                                TXID: hash,
-                            }
-                        }, {
-                            upsert: true,
-                            new: true,
-                            setDefaultsOnInsert: true
-                        }, function (error, response) {
-                            console.log("response", response)
-                            resolve(response)
-                        });
-                    });
+                        if (data.update) {
+                            Zoning.findOne({"_id": ObjectId(data._id)}, function (err, zoning) {
+                                zoning.TXID = hash;
+                                zoning.save(function (err) {
+                                    if (err) {
+                                        console.log('ERROR!');
+                                    } else {
+                                        resolve(zoning);
+                                    }
+                                });
+                            });
+                        } else {
+                            Zoning.findOneAndUpdate({
+                                ZONING_ID: data.ZONING_ID
+                            }, {
+                                $set: {
+                                    TXID: hash,
+                                }
+                            }, {
+                                upsert: true,
+                                new: true,
+                                setDefaultsOnInsert: true
+                            }, function (error, response) {
+                                console.log("response", response)
+                                resolve(response)
+                            });
+                        }
+                    }).on('error', console.log);;
             })
         })
     },

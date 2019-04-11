@@ -12,19 +12,18 @@ router.post('/addMankani', async function (req, res, next) {
 router.post('/addParcel', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     // console.log("req",req.body)
-    queries.saveParcels(req.body);
+    if(!req.body.update) queries.saveParcels(req.body);
     let parcel = await sendTransaction.sendParcelsTX(req.body);
     return res.status(200).send(parcel);
 });
 router.post('/addZoning', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
-    queries.saveZoning(req.body);
+    if(!req.body.update) queries.saveZoning(req.body);
     let zoning = await sendTransaction.sendZoningTX(req.body);
     return res.status(200).send(zoning);
 });
 router.post('/addBuilding', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
-    console.log(req.body.update)
     if(!req.body.update)  queries.saveBuilding(req.body);
     let building = await sendTransaction.sendBuilingTX(req.body);
     return res.status(200).send(building);
