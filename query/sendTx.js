@@ -92,7 +92,7 @@ var sendTransaction = {
                 transaction.sign(privateKey);
                 web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'))
                     .on('transactionHash', function (hash) {
-                        if (data.update) {
+                        if (data.update==='true') {
                             //console.log("if",hash)
                             Building.findOne({"_id": ObjectId(data._id)}, function (err, building) {
                                 building.TXID = hash;
@@ -124,6 +124,7 @@ var sendTransaction = {
         })
     },
     sendParcelsTX: function (data) {
+        console.log("data",data)
         return new Promise(function (resolve, reject) {
             var myAddress = data.address;
             var privateKey = Buffer.from(data.myPrivateKey, 'hex')
@@ -172,7 +173,7 @@ var sendTransaction = {
                         // }, function (error, response) {
                         //     resolve(response);
                         // });
-                        if (data.update) {
+                        if (data.update==='true') {
                             //console.log("if",hash)
                             Parcels.findOne({"_id": ObjectId(data._id)}, function (err, parcels) {
                                 parcels.TXID = hash;
@@ -201,7 +202,7 @@ var sendTransaction = {
                                 resolve(response);
                             });
                         }
-                    }).on('error', console.log);;
+                    }).on('error', console.log);
             })
         })
     },
@@ -242,7 +243,7 @@ var sendTransaction = {
                 //sending transacton via web3js module
                 web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex'))
                     .on('transactionHash', function (hash) {
-                        if (data.update) {
+                        if (data.update==='true') {
                             Zoning.findOne({"_id": ObjectId(data._id)}, function (err, zoning) {
                                 zoning.TXID = hash;
                                 zoning.save(function (err) {
