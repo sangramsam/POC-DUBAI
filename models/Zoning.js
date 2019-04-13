@@ -5,7 +5,7 @@ var zoningSchema = new mongoose.Schema(
             type: String
         },
         ZONING_ID: {
-            type: Number
+            type: String
         },
         ZONING_CODE: {
             type: String
@@ -13,8 +13,11 @@ var zoningSchema = new mongoose.Schema(
         ENTRY_WHO: {
             type: String
         },
+        ENTRY_WHEN: {
+            type: String
+        },
         HEIGHT_ID: {
-            type: Number
+            type: String
         },
         HEIGHT_DESC_ENGLISH: {
             type: String
@@ -23,7 +26,7 @@ var zoningSchema = new mongoose.Schema(
             type: String
         },
         SETBACK_ID: {
-            type: Number
+            type: String
         },
         SETBACK_DESC_ENGLISH: {
             type: String
@@ -32,7 +35,7 @@ var zoningSchema = new mongoose.Schema(
             type: String
         },
         LANDUSE_ID: {
-            type: Number
+            type: String
         },
         LANDUSE_DESC_ENGLISH: {
             type: String
