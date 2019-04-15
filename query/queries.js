@@ -249,11 +249,12 @@ var queries = {
     },
     getBlockExplorer: function () {
         return new Promise(function (resolve, reject) {
-            var promises = [Mankani.find().where({TXID: {$exists: true}}).exec(), Building.find().where({TXID: {$exists: true}}).exec(), Zoning.find().where({TXID: {$exists: true}}).exec()]
-            q.all(promises).then(function (result) {
-                    //console.log("result", result);
+            var promises = [Mankani.find().where({TXID: {$exists: true}}).exec(),Ledger.find().where({TXID: {$exists: true}}).exec(), Building.find().where({TXID: {$exists: true}}).exec(), Zoning.find().where({TXID: {$exists: true}}).exec()]
+                q.all(promises).then(function (result) {
+                    console.log("result", result);
                     let totalResult = result[0].concat(result[1]);
-                    totalResult.concat(result[1])
+                    totalResult.concat(result[2])
+                    totalResult.concat(result[3])
                     resolve(totalResult)
                 }
             )

@@ -18,6 +18,9 @@ var ledgerSchema = new mongoose.Schema(
         },
         Document: {
             type: String
+        },
+        TXID: {
+            type: String
         }
     },
     {

@@ -2,6 +2,7 @@ var express = require('express');
 var router = express.Router();
 var queries = require('../query/queries');
 var sendTransaction = require('../query/sendTx');
+var ledgerTransaction = require('../query/ledgerTX');
 /* GET users listing. */
 router.post('/addMankani', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
@@ -41,6 +42,11 @@ router.post('/addUser', async function (req, res, next) {
 router.post('/addLedger', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let ledger = await queries.saveLedger(req.body);
+    return res.status(200).send(ledger);
+});
+router.post('/addLedgerTx', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let ledger = await ledgerTransaction.sendLedgerTX(req.body);
     return res.status(200).send(ledger);
 });
 router.get('/getLedger', async function (req, res, next) {
