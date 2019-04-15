@@ -38,6 +38,21 @@ router.post('/addUser', async function (req, res, next) {
     let user = await queries.saveUser(req.body);
     return res.status(200).send(user);
 });
+router.post('/addLedger', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let ledger = await queries.saveLedger(req.body);
+    return res.status(200).send(ledger);
+});
+router.get('/getLedger', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let ledger = await queries.getLedger();
+    return res.status(200).send(ledger);
+});
+router.get('/getCombine', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let ledger = await queries.getCombine();
+    return res.status(200).send(ledger);
+});
 router.get('/blockExplorer', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let blockEx = await queries.getBlockExplorer();

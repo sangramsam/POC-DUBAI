@@ -4,6 +4,8 @@ const Mankani = require('../models/mankani');
 const Parcels = require('../models/Parcels');
 const Zoning = require('../models/Zoning');
 const User = require('../models/user');
+const Ledger = require('../models/ledger');
+const Combine = require('../models/combine');
 const Certuser = require('../models/certuser');
 var _ = require('underscore');
 var q = require('q');
@@ -155,6 +157,48 @@ var queries = {
                 return resolve({
                     "status": true,
                     "User": data
+                });
+            });
+        });
+    },
+    saveLedger: function (data) {
+        return new Promise(function (resolve, reject) {
+            Ledger.create(data, function (error, data) {
+                if (error) return resolve({
+                    "status": false,
+                    "Ledger": error
+                });
+                return resolve({
+                    "status": true,
+                    "Ledger": data
+                });
+            });
+        });
+    },
+    getCombine: function (data) {
+        return new Promise(function (resolve, reject) {
+            Combine.find({}).exec(async function (err, data) {
+                if (err) return resolve({
+                    "status": false,
+                    "Ledger": err
+                });
+                return resolve({
+                    "status": true,
+                    "Ledger": data
+                });
+            });
+        });
+    },
+    getLedger: function (data) {
+        return new Promise(function (resolve, reject) {
+            Ledger.find({}).exec(async function (err, data) {
+                if (err) return resolve({
+                    "status": false,
+                    "Ledger": err
+                });
+                return resolve({
+                    "status": true,
+                    "Ledger": data
                 });
             });
         });
