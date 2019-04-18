@@ -11,7 +11,7 @@ var certTransaction = {
             var privateKey = Buffer.from(myPrivateKey, 'hex')
             //contract abi is the array that you can get from the ethereum wallet or etherscan
             var contractABI = ABI;
-            var contractAddress = "0xB98eb5884bb113dEBbDBBe6d56c083E73cc7d7c6";
+            var contractAddress = "0x31249C23AA368d60d06b71107319BaFe41CE87A6";
             //creating contract object
             var contract = new web3js.eth.Contract(contractABI, contractAddress);
             //console.log("contract",contract)

@@ -4,13 +4,13 @@ var queries = require('../query/queries');
 var sendTransaction = require('../query/sendTx');
 var ledgerTransaction = require('../query/ledgerTX');
 /* GET users listing. */
-router.post('/addMankani', async function (req, res, next) {
+router.post('/addStudentSchool', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let mankani = await queries.saveMankani(req.body);
     sendTransaction.sendMakaniTX(req.body);
     return res.status(200).send(mankani);
 });
-router.post('/addParcel', async function (req, res, next) {
+router.post('/addStudentUniversity', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     // console.log("req",req.body)
     if(req.body.update==='false') queries.saveParcels(req.body);

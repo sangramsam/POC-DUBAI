@@ -3,7 +3,7 @@
     "constant": false,
     "inputs": [
       {
-        "name": "cert",
+        "name": "student",
         "type": "bytes32[]"
       },
       {
@@ -11,7 +11,43 @@
         "type": "string"
       }
     ],
-    "name": "createNewCert",
+    "name": "createStudentCompany",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "student",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "StudentName",
+        "type": "string"
+      }
+    ],
+    "name": "createStudentSchool",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "student",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "StudentName",
+        "type": "string"
+      }
+    ],
+    "name": "createStudentUniversity",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",
@@ -26,7 +62,31 @@
         "type": "bytes32"
       }
     ],
-    "name": "certAdded",
+    "name": "schoolAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "msg",
+        "type": "bytes32"
+      }
+    ],
+    "name": "univerisityAdded",
+    "type": "event"
+  },
+  {
+    "anonymous": false,
+    "inputs": [
+      {
+        "indexed": false,
+        "name": "msg",
+        "type": "bytes32"
+      }
+    ],
+    "name": "companyAdded",
     "type": "event"
   }
 ]
