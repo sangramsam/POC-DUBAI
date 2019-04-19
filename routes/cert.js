@@ -29,6 +29,7 @@ router.post('/login', async function (req, res, next) {
 });
 router.post('/addStudentSchool', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
+    //console.log("req.body",req.body)
     let school = await queries.saveSchool(req.body);
     return res.status(200).send(school);
 });
@@ -41,6 +42,21 @@ router.post('/addStudentCompany', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let company = await queries.saveCompany(req.body);
     return res.status(200).send(company);
+});
+router.get('/getSchoolStundent',async function (req, res, next) {
+    if (!req.param) return res.status(500).send("Invalid Inputs!");
+    let school = await queries.getSchoolStudent();
+    return res.status(200).send(school);
+});
+router.get('/getCompanyStundent',async function (req, res, next) {
+    if (!req.param) return res.status(500).send("Invalid Inputs!");
+    let school = await queries.getCompanyStundent();
+    return res.status(200).send(school);
+});
+router.get('/getUniversityStundent', async function (req, res, next) {
+    if (!req.param) return res.status(500).send("Invalid Inputs!");
+    let university = await queries.getUniversityStudent();
+    return res.status(200).send(university);
 });
 
 module.exports = router;

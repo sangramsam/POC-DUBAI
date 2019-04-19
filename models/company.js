@@ -10,7 +10,7 @@ var companySchema = new mongoose.Schema(
         StudentBranch: {
             type: String
         },
-        Sex: {
+        Gender: {
             type: String
         },
         DateOfBirth: {
@@ -20,6 +20,9 @@ var companySchema = new mongoose.Schema(
             type: String
         },
         companyDocument: {
+            type: String
+        },
+        studentDocument: {
             type: String
         },
     },

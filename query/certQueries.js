@@ -2,7 +2,7 @@ const School = require('../models/school');
 const Student = require('../models/student');
 const University = require('../models/university');
 const Company = require('../models/company');
-const User = require('../models/user');
+const User = require('../models/certuser');
 var _ = require('underscore');
 var q = require('q');
 var queries = {
@@ -19,7 +19,7 @@ var queries = {
             });
         });
     },
-    getStudentSchool: function () {
+    getSchoolStudent: function () {
         return new Promise(function (resolve, reject) {
             //console.log("Blockchain",Blockchain)
             School.find().exec(async function (err, data) {
@@ -32,7 +32,20 @@ var queries = {
             });
         });
     },
-    getUniversity: function () {
+    getCompanyStundent: function () {
+        return new Promise(function (resolve, reject) {
+            //console.log("Blockchain",Blockchain)
+            Company.find().exec(async function (err, data) {
+                //console.log("blockchain",blockchain)
+                if (err) {
+                    resolve({"status": false, "data": err});
+                } else {
+                    resolve({"status": true, "data": data});
+                }
+            });
+        });
+    },
+    getUniversityStudent: function () {
         return new Promise(function (resolve, reject) {
             //console.log("Blockchain",Blockchain)
             University.find({}).exec(async function (err, data) {
