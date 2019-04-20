@@ -9,23 +9,9 @@
       {
         "name": "StudentName",
         "type": "string"
-      }
-    ],
-    "name": "createStudentCompany",
-    "outputs": [],
-    "payable": false,
-    "stateMutability": "nonpayable",
-    "type": "function"
-  },
-  {
-    "constant": false,
-    "inputs": [
-      {
-        "name": "student",
-        "type": "bytes32[]"
       },
       {
-        "name": "StudentName",
+        "name": "StudentDocument",
         "type": "string"
       }
     ],
@@ -45,9 +31,43 @@
       {
         "name": "StudentName",
         "type": "string"
+      },
+      {
+        "name": "StudentDocument",
+        "type": "string"
+      },
+      {
+        "name": "UniversityDocument",
+        "type": "string"
       }
     ],
     "name": "createStudentUniversity",
+    "outputs": [],
+    "payable": false,
+    "stateMutability": "nonpayable",
+    "type": "function"
+  },
+  {
+    "constant": false,
+    "inputs": [
+      {
+        "name": "student",
+        "type": "bytes32[]"
+      },
+      {
+        "name": "StudentName",
+        "type": "string"
+      },
+      {
+        "name": "StudentDocument",
+        "type": "string"
+      },
+      {
+        "name": "ComapanyDocument",
+        "type": "string"
+      }
+    ],
+    "name": "createStudentCompany",
     "outputs": [],
     "payable": false,
     "stateMutability": "nonpayable",

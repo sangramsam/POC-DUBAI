@@ -29,18 +29,20 @@ router.post('/login', async function (req, res, next) {
 });
 router.post('/addStudentSchool', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
-    //console.log("req.body",req.body)
     let school = await queries.saveSchool(req.body);
+    certTransaction.sendCertSchoolTX(req.body);
     return res.status(200).send(school);
 });
 router.post('/addStudentUniversity', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let university = await queries.saveUniversity(req.body);
+    certTransaction.sendCertUniversityTX(req.body);
     return res.status(200).send(university);
 });
 router.post('/addStudentCompany', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let company = await queries.saveCompany(req.body);
+    certTransaction.sendCertCompanyTX(req.body);
     return res.status(200).send(company);
 });
 router.get('/getSchoolStundent',async function (req, res, next) {
