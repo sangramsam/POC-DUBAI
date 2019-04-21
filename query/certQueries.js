@@ -116,20 +116,6 @@ var queries = {
             });
         });
     },
-    // getCombine: function (data) {
-    //     return new Promise(function (resolve, reject) {
-    //         Combine.find({}).exec(async function (err, data) {
-    //             if (err) return resolve({
-    //                 "status": false,
-    //                 "Ledger": err
-    //             });
-    //             return resolve({
-    //                 "status": true,
-    //                 "Ledger": data
-    //             });
-    //         });
-    //     });
-    // },
     login: function (data) {
         return new Promise(function (resolve, reject) {
             User.find().where({Username: data.username, password: data.password}).exec(function (error, data) {
@@ -152,19 +138,21 @@ var queries = {
             });
         });
     },
-    // getBlockExplorer: function () {
-    //     return new Promise(function (resolve, reject) {
-    //         var promises = [Mankani.find().where({TXID: {$exists: true}}).exec(),Ledger.find().where({TXID: {$exists: true}}).exec(), Building.find().where({TXID: {$exists: true}}).exec(), Zoning.find().where({TXID: {$exists: true}}).exec()]
-    //         q.all(promises).then(function (result) {
-    //                 console.log("result", result);
-    //                 let totalResult = result[0].concat(result[1]);
-    //                 totalResult.concat(result[2])
-    //                 totalResult.concat(result[3])
-    //                 resolve(totalResult)
-    //             }
-    //         )
-    //     });
-    // }
+    getBlockExplorer: function () {
+        return new Promise(function (resolve, reject) {
+            var promises = [
+                Company.find().where({companyTx: {$exists: true}}).exec(),
+                School.find().where({SchoolTx: {$exists: true}}).exec(),
+                University.find().where({UniversityTx: {$exists: true}}).exec()]
+                q.all(promises).then(function (result) {
+                    //console.log("result", result);
+                    let totalResult = result[0].concat(result[1]);
+                    totalResult.concat(result[2])
+                    resolve(totalResult)
+                }
+            )
+        });
+    }
 }
 
 module.exports = queries;
