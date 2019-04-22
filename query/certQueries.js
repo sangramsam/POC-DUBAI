@@ -147,8 +147,8 @@ var queries = {
                 q.all(promises).then(function (result) {
                     //console.log("result", result);
                     let totalResult = result[0].concat(result[1]);
-                    totalResult.concat(result[2])
-                    resolve(totalResult)
+                    let t2= totalResult.concat(result[2])
+                    resolve(t2)
                 }
             )
         });
