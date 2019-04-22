@@ -9,6 +9,7 @@ const Combine = require('../models/combine');
 const Certuser = require('../models/certuser');
 var _ = require('underscore');
 var q = require('q');
+var sendTransaction = require('./sendTx');
 var queries = {
     getBlockchain: function () {
         return new Promise(function (resolve, reject) {
@@ -249,13 +250,17 @@ var queries = {
     },
     getBlockExplorer: function () {
         return new Promise(function (resolve, reject) {
-            var promises = [Mankani.find().where({TXID: {$exists: true}}).exec(),Ledger.find().where({TXID: {$exists: true}}).exec(), Building.find().where({TXID: {$exists: true}}).exec(), Zoning.find().where({TXID: {$exists: true}}).exec()]
-                q.all(promises).then(function (result) {
-                    console.log("result", result);
+            var promises = [Mankani.find().where({TXID: {$exists: true}}).exec(), Ledger.find().where({TXID: {$exists: true}}).exec(), Building.find().where({TXID: {$exists: true}}).exec(), Zoning.find().where({TXID: {$exists: true}}).exec()]
+            q.all(promises).then(async function (result) {
                     let totalResult = result[0].concat(result[1]);
-                    totalResult.concat(result[2])
-                    totalResult.concat(result[3])
-                    resolve(totalResult)
+                    let cc = totalResult.concat(result[2])
+                    let c1 = cc.concat(result[3]);
+                    // //console.log("result", c1);
+                    // for (let i = 0; i < c1.length; i++) {
+                    //     //console.log(c1[i]);
+                    //     c1[i].date = await sendTransaction.getDateAndTime(c1[i].TXID);
+                    // }
+                    resolve(c1)
                 }
             )
         });
