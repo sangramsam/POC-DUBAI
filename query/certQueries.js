@@ -74,32 +74,27 @@ var queries = {
     },
     saveUniversity: function (data) {
         return new Promise(function (resolve, reject) {
-            University.create(data, function (error, data) {
-                if (error) return resolve({
-                    "status": false,
-                    "university": error
+            School.findOneAndUpdate({StudentID: data.StudentID},
+                {
+                    $set: {
+                        UniversityDocument: data.UniversityDocument,
+                    }
+                }, function (error, response) {
+                    //console.log("response", response)
+                    resolve(response);
                 });
-                //console.log("Parcels", data)
-                return resolve({
-                    "status": true,
-                    "university": data
-                });
-            });
         });
     },
     saveCompany: function (data) {
         return new Promise(function (resolve, reject) {
-            Company.create(data, function (error, data) {
-                if (error) return resolve({
-                    "status": false,
-                    "company": error
+            School.findOneAndUpdate({StudentID: data.StudentID},
+                {
+                    $set: {
+                        CompanyDocument: data.CompanyDocument,
+                    }
+                }, function (error, response) {
+                    resolve(response);
                 });
-                //console.log("Parcels", data)
-                return resolve({
-                    "status": true,
-                    "company": data
-                });
-            });
         });
     },
     saveUser: function (data) {
@@ -141,14 +136,27 @@ var queries = {
     getBlockExplorer: function () {
         return new Promise(function (resolve, reject) {
             var promises = [
-                Company.find().where({companyTx: {$exists: true}}).exec(),
-                School.find().where({SchoolTx: {$exists: true}}).exec(),
-                University.find().where({UniversityTx: {$exists: true}}).exec()]
+                School.find().where({SchoolTx: {$exists: true}}).exec()]
                 q.all(promises).then(function (result) {
-                    //console.log("result", result);
-                    let totalResult = result[0].concat(result[1]);
-                    let t2= totalResult.concat(result[2])
-                    resolve(t2)
+                   // console.log("result", result);
+                    let totalResult = result[0]
+                    resolve(totalResult)
+                }
+            )
+        });
+    },
+    searchStudent: function (studentId) {
+        return new Promise(function (resolve, reject) {
+            var promises = [
+                School.find().exec(),]
+                 q.all(promises).then(function (result) {
+                    let totalResult = result[0];
+                    let student = _.find(totalResult, (key) => key.StudentID === studentId);
+                    if (student) {
+                        resolve([student]);
+                    } else {
+                        resolve([]);
+                    }
                 }
             )
         });

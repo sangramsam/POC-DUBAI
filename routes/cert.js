@@ -65,5 +65,10 @@ router.get('/blockExplorer', async function (req, res, next) {
     let blockEx = await queries.getBlockExplorer();
     return res.status(200).send(blockEx);
 });
+router.get('/searchStudent', async function (req, res, next) {
+    if (!req.query) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.searchStudent(req.query.studentID);
+    return res.status(200).send(student);
+});
 
 module.exports = router;

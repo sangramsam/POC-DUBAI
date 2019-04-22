@@ -14,7 +14,7 @@ var certTransaction = {
             var privateKey = Buffer.from(data.myPrivateKey, 'hex')
             //contract abi is the array that you can get from the ethereum wallet or etherscan
             var contractABI = ABI;
-            var contractAddress = "0x68193c331b230f88bf51b596025f75afa116293f";
+            var contractAddress = "0xd7e172d85266036a77fab0c5ba075e40b1e30d51";
             //creating contract object
             var contract = new web3js.eth.Contract(contractABI, contractAddress);
             //console.log("contract",contract)
@@ -31,7 +31,7 @@ var certTransaction = {
                     "to": contractAddress,
                     "gasPrice": web3js.utils.toHex(20 * 1e9),
                     "gasLimit": web3js.utils.toHex(2100000),
-                    "data": contract.methods.createStudentCompany([web3js.utils.fromAscii(data.StudentID), web3js.utils.fromAscii(data.StudentBranch), web3js.utils.fromAscii(data.Gender), web3js.utils.fromAscii(data.DateOfBirth)], data.StudentName, data.studentDocument, data.companyDocument).encodeABI(),
+                    "data": contract.methods.createStudentCompany([web3js.utils.fromAscii(data.StudentID), web3js.utils.fromAscii(data.StudentBranch), web3js.utils.fromAscii(data.Gender), web3js.utils.fromAscii(data.DateOfBirth)], data.StudentName, data.studentDocument, data.CompanyDocument).encodeABI(),
                     "nonce": web3js.utils.toHex(count)
                 }
                 //console.log(rawTransaction);
@@ -41,9 +41,9 @@ var certTransaction = {
                 transaction.sign(privateKey);
                 web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex')).on('transactionHash', function (hash) {
                     console.log("hash", hash)
-                    Company.findOneAndUpdate({"StudentID": data.StudentID}, {
+                    School.findOneAndUpdate({"StudentID": data.StudentID}, {
                         $set: {
-                            companyTx: hash,
+                            CompanyTx: hash,
                         }
                     }, {
                         upsert: true,
@@ -63,7 +63,7 @@ var certTransaction = {
             var privateKey = Buffer.from(data.myPrivateKey, 'hex')
             //contract abi is the array that you can get from the ethereum wallet or etherscan
             var contractABI = ABI;
-            var contractAddress = "0x0e12d0ef9d7a3e1bf519fe8649f88e7565e29eb1";
+            var contractAddress = "0xd7e172d85266036a77fab0c5ba075e40b1e30d51";
             //creating contract object
             var contract = new web3js.eth.Contract(contractABI, contractAddress);
             //console.log("contract",contract)
@@ -112,7 +112,7 @@ var certTransaction = {
             var privateKey = Buffer.from(data.myPrivateKey, 'hex')
             //contract abi is the array that you can get from the ethereum wallet or etherscan
             var contractABI = ABI;
-            var contractAddress = "0x0e12d0ef9d7a3e1bf519fe8649f88e7565e29eb1";
+            var contractAddress = "0xd7e172d85266036a77fab0c5ba075e40b1e30d51";
             //creating contract object
             var contract = new web3js.eth.Contract(contractABI, contractAddress);
             //console.log("contract",contract)
@@ -139,7 +139,7 @@ var certTransaction = {
                 transaction.sign(privateKey);
                 web3js.eth.sendSignedTransaction('0x' + transaction.serialize().toString('hex')).on('transactionHash', function (hash) {
                     console.log("hash", hash)
-                    University.findOneAndUpdate({"StudentID": data.StudentID}, {
+                    School.findOneAndUpdate({"StudentID": data.StudentID}, {
                         $set: {
                             UniversityTx: hash,
                         }

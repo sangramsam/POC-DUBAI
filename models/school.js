@@ -22,6 +22,18 @@ var schoolSchema = new mongoose.Schema(
         SchoolDocument: {
             type: String
         },
+        UniversityTx: {
+            type: String
+        },
+        UniversityDocument: {
+            type: String
+        },
+        CompanyTx: {
+            type: String
+        },
+        CompanyDocument: {
+            type: String
+        },
     },
     {
         timestamps: true
