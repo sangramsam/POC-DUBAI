@@ -22,7 +22,7 @@ var queries = {
     getSchoolStudent: function () {
         return new Promise(function (resolve, reject) {
             //console.log("Blockchain",Blockchain)
-            School.find().exec(async function (err, data) {
+            School.find().sort({ "createdAt": -1 }).exec(async function (err, data) {
                 //console.log("blockchain",blockchain)
                 if (err) {
                     resolve({"status": false, "data": err});
@@ -136,7 +136,7 @@ var queries = {
     getBlockExplorer: function () {
         return new Promise(function (resolve, reject) {
             var promises = [
-                School.find().where({SchoolTx: {$exists: true}}).exec()]
+                School.find().sort({ "createdAt": -1 }).where({SchoolTx: {$exists: true}}).exec()]
                 q.all(promises).then(function (result) {
                    // console.log("result", result);
                     let totalResult = result[0]
