@@ -69,5 +69,11 @@ router.post('/login', async function (req, res, next) {
     let user = await queries.login(req.body);
     return res.status(200).send(user);
 });
+router.get('/getDate', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let time = await sendTransaction.getDateAndTime(req.query.tx);
+    return res.status(200).send(time);
+});
+
 
 module.exports = router;

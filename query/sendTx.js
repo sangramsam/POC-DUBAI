@@ -276,16 +276,15 @@ var sendTransaction = {
         })
     },
     getDateAndTime: function (tx) {
+       // console.log("tx",tx)
         return new Promise(function (resolve, reject) {
-            web3js.eth.getTransaction(tx).then((res)=>{
-                //console.log("res",res);
-                web3js.eth.getBlock(res.blockNumber).then((date)=>{
-                    resolve(date);
+            web3js.eth.getTransaction(tx).then((res) => {
+               // console.log("res", res.blockNumber);
+                web3js.eth.getBlock(res.blockNumber).then((date) => {
+                    //console.log("date", date.timestamp)
+                    resolve({date: date.timestamp});
                 })
             });
-            // let date = web3js.eth.getBlock(web3js.eth.getTransaction(tx).blockNumber).timestamp;
-            // console.log("date",date)
-
         })
     }
 
