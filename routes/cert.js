@@ -70,5 +70,41 @@ router.get('/searchStudent', async function (req, res, next) {
     let student = await queries.searchStudent(req.query.studentID);
     return res.status(200).send(student);
 });
+router.get('/generatePrivatekey', async function (req, res, next) {
+    if (!req.query) return res.status(500).send("Invalid Inputs!");
+    let student = await certTransaction.generatePrivateKey();
+    return res.status(200).send(student);
+});
+router.post('/registerStudent', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.registerStudent(req.body);
+    return res.status(200).send(student);
+});
+router.post('/additionalCourse', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.saveAdditionalCourse(req.body);
+    return res.status(200).send(student);
+});
+
+router.post('/approveAdditionalCourse', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.approveAdditionalCourse(req.body);
+    return res.status(200).send(student);
+});
+router.post('/approveRegistration', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.approveRegistration(req.body);
+    return res.status(200).send(student);
+});
+router.get('/getRegistrationRequest', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getRegistrationRequest();
+    return res.status(200).send(student);
+});
+router.get('/getDocumentRequest', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getDocumentRequest();
+    return res.status(200).send(student);
+});
 
 module.exports = router;
