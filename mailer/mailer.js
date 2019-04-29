@@ -14,7 +14,7 @@ var mailer = {
         from: 'sangram@chainflux.com',
         to: data.email,
         subject: 'Registration successfully Testing',
-        text: 'StudentID: ' + data.StudentID + 'Your passcode is:   ' + data.privateKey,
+        text: 'StudentID: ' + data.StudentID + '  Your passcode is:   ' + data.privateKey,
       };
 
       transporter.sendMail(mailOptions, function (error, info) {

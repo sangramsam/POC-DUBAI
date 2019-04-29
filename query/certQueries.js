@@ -4,6 +4,7 @@ const Registration = require('../models/registration');
 const University = require('../models/university');
 const Company = require('../models/company');
 const User = require('../models/certuser');
+const DocumentGrant = require('../models/documentGrant');
 const StudentAdditionalCourse = require('../models/studentAdditionalCourse');
 var _ = require('underscore');
 var q = require('q');
@@ -75,6 +76,19 @@ var queries = {
       });
     });
   },
+  updateSchool: function (data) {
+    return new Promise(function (resolve, reject) {
+      School.findOneAndUpdate({StudentID: data.StudentID},
+        {
+          $set: {
+            SchoolDocument: data.SchoolDocument,
+          }
+        }, function (error, response) {
+          //console.log("response", response)
+          resolve(response);
+        });
+    });
+  },
   saveUniversity: function (data) {
     return new Promise(function (resolve, reject) {
       School.findOneAndUpdate({StudentID: data.StudentID},
@@ -117,6 +131,28 @@ var queries = {
   login: function (data) {
     return new Promise(function (resolve, reject) {
       User.find().where({Username: data.username, password: data.password}).exec(function (error, data) {
+        if (error) return resolve({
+          "status": false,
+          "User": "username/password Incorrect"
+        });
+        if (data.length > 0) {
+          return resolve({
+            "status": true,
+            "User": data
+          });
+        } else {
+          return resolve({
+            "status": false,
+            "User": "username/password Incorrect"
+          });
+        }
+
+      });
+    });
+  },
+  studentLogin: function (data) {
+    return new Promise(function (resolve, reject) {
+      School.find().where({StudentID: data.username, privateKey: data.password}).exec(function (error, data) {
         if (error) return resolve({
           "status": false,
           "User": "username/password Incorrect"
@@ -198,7 +234,7 @@ var queries = {
         {
           $set: {
             AdminApprove: true,
-            ApprovedBy:data.approver
+            ApprovedBy: data.approver
           }
         }, function (error, response) {
           if (error) return resolve({
@@ -212,22 +248,23 @@ var queries = {
         });
     });
   },
-  approveRegistration:  function (data) {
-    return new Promise(  function (resolve, reject) {
-      Registration.findOneAndUpdate({Email: data.Email},
+  approveRegistration: function (data) {
+    console.log("data", data)
+    return new Promise(function (resolve, reject) {
+      Registration.findOneAndUpdate({Email: data.Email, EmiratesID: data.EmiratesID},
         {
           $set: {
             approved: true,
-            approvedBy:data.approver
+            approvedBy: data.approver
           }
-        },  async function (error, response) {
+        }, async function (error, response) {
           if (error) return resolve({
             "status": false,
             "approve": error
           });
-            let student=await certTx.generatePrivateKey(response);
-            queries.saveSchool(student);
-           return resolve({
+          let student = await certTx.generatePrivateKey(response);
+          queries.saveSchool(student);
+          return resolve({
             "status": true,
             "approve": response
           });
@@ -260,6 +297,101 @@ var queries = {
           "Request": data
         });
       });
+    });
+  },
+  getMyAdditionalDocument: function (StudentID) {
+    return new Promise(function (resolve, reject) {
+      StudentAdditionalCourse.find({StudentID: StudentID}).exec(async function (error, data) {
+        if (error) return resolve({
+          "status": false,
+          "Request": error
+        });
+        return resolve({
+          "status": true,
+          "Request": data
+        });
+      });
+    });
+  },
+  getGranttedUserList: function (Student) {
+  console.log("Student",Student)
+    return new Promise(function (resolve, reject) {
+      DocumentGrant.find({StudentID: Student.StudentID, grantDocument: Student.grantDocument}).exec(async function (error, data) {
+        if (error) return resolve({
+          "status": false,
+          "Request": error
+        });
+        return resolve({
+          "status": true,
+          "Request": data
+        });
+      });
+    });
+  },
+  getMyGranttedList: function (Student) {
+    return new Promise(function (resolve, reject) {
+      DocumentGrant.find({GrantFor: Student.GrantFor}).exec(async function (error, data) {
+        if (error) return resolve({
+          "status": false,
+          "Request": error
+        });
+        return resolve({
+          "status": true,
+          "Request": data
+        });
+      });
+    });
+  },
+  saveDocumentGrant: function (grant) {
+    return new Promise(function (resolve, reject) {
+      DocumentGrant.create(grant, function (error, data) {
+        if (error) return resolve({
+          "status": false,
+          "grant": error
+        });
+        return resolve({
+          "status": true,
+          "grant": data
+        });
+      });
+    });
+  },
+  approveDocumentGrant: function (data) {
+    return new Promise(function (resolve, reject) {
+      DocumentGrant.findOneAndUpdate({grantId: data.grantId, StudentID: data.StudentID},
+        {
+          $set: {
+            grantStatus: true,
+          }
+        }, async function (error, response) {
+          if (error) return resolve({
+            "status": false,
+            "grant": error
+          });
+          return resolve({
+            "status": true,
+            "grant": response
+          });
+        });
+    });
+  },
+  revokeDocumentGrant: function (data) {
+    return new Promise(function (resolve, reject) {
+      DocumentGrant.findOneAndUpdate({StudentID: data.StudentID},
+        {
+          $set: {
+            grantStatus: false
+          }
+        }, async function (error, response) {
+          if (error) return resolve({
+            "status": false,
+            "grant": error
+          });
+          return resolve({
+            "status": true,
+            "grant": response
+          });
+        });
     });
   },
 }

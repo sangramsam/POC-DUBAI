@@ -27,9 +27,20 @@ router.post('/login', async function (req, res, next) {
     let user = await queries.login(req.body);
     return res.status(200).send(user);
 });
+router.post('/studentLogin', async function (req, res, next) {
+    if (!req.body || !req.body.username || !req.body.password) return res.status(500).send("Invalid Inputs!");
+    let user = await queries.studentLogin(req.body);
+    return res.status(200).send(user);
+});
 router.post('/addStudentSchool', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let school = await queries.saveSchool(req.body);
+    certTransaction.sendCertSchoolTX(req.body);
+    return res.status(200).send(school);
+});
+router.post('/updateSchool', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let school = await queries.updateSchool(req.body);
     certTransaction.sendCertSchoolTX(req.body);
     return res.status(200).send(school);
 });
@@ -104,6 +115,41 @@ router.get('/getRegistrationRequest', async function (req, res, next) {
 router.get('/getDocumentRequest', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let student = await queries.getDocumentRequest();
+    return res.status(200).send(student);
+});
+router.get('/getMyAdditionalCourses', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getMyAdditionalDocument(req.query.StudentID);
+    return res.status(200).send(student);
+});
+router.post('/documentGrantRequest', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.saveDocumentGrant(req.body);
+    return res.status(200).send(student);
+});
+router.post('/documentGrantRequestApprove', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.approveDocumentGrant(req.body);
+    return res.status(200).send(student);
+});
+router.post('/documentGrantRequestRevoke', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.revokeDocumentGrant(req.body);
+    return res.status(200).send(student);
+});
+router.get('/getGranttedUserList', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getGranttedUserList(req.query);
+    return res.status(200).send(student);
+});
+router.get('/getGranttedUserList', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getGranttedUserList(req.query);
+    return res.status(200).send(student);
+});
+router.get('/getMyGranttedList', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getMyGranttedList(req.query);
     return res.status(200).send(student);
 });
 

@@ -16,6 +16,9 @@ var studentAddSchema = new mongoose.Schema(
     CourseType: {
       type: String
     },
+    CourseName: {
+      type: String
+    },
     Message: {
       type: String
     },
