@@ -20,6 +20,9 @@ var documentSchema = new mongoose.Schema(
     grantDocument: {
       type: String
     },
+    grantTx: {
+      type: String
+    },
   },
   {
     timestamps: true

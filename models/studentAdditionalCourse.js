@@ -26,7 +26,10 @@ var studentAddSchema = new mongoose.Schema(
       type: Boolean,
       default: false
     },
-     ApprovedBy: {
+    ApprovedBy: {
+      type: String
+    },
+    docTx: {
       type: String
     }
   },

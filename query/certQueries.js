@@ -9,6 +9,8 @@ const StudentAdditionalCourse = require('../models/studentAdditionalCourse');
 var _ = require('underscore');
 var q = require('q');
 var certTx = require('./certTx');
+const DocumentGrantTx = require('../models/documentGrantTx');
+const StudentAdditionalTx = require('../models/studentAdditionalTx');
 var queries = {
   getStudent: function () {
     return new Promise(function (resolve, reject) {
@@ -314,7 +316,6 @@ var queries = {
     });
   },
   getGranttedUserList: function (Student) {
-  console.log("Student",Student)
     return new Promise(function (resolve, reject) {
       DocumentGrant.find({StudentID: Student.StudentID, grantDocument: Student.grantDocument}).exec(async function (error, data) {
         if (error) return resolve({
@@ -331,6 +332,34 @@ var queries = {
   getMyGranttedList: function (Student) {
     return new Promise(function (resolve, reject) {
       DocumentGrant.find({GrantFor: Student.GrantFor}).exec(async function (error, data) {
+        if (error) return resolve({
+          "status": false,
+          "Request": error
+        });
+        return resolve({
+          "status": true,
+          "Request": data
+        });
+      });
+    });
+  },
+  getMyDocumentListTX: function (Student) {
+    return new Promise(function (resolve, reject) {
+      StudentAdditionalTx.find({StudentID: Student.StudentID}).exec(async function (error, data) {
+        if (error) return resolve({
+          "status": false,
+          "Request": error
+        });
+        return resolve({
+          "status": true,
+          "Request": data
+        });
+      });
+    });
+  },
+  getMyGranttedListTX: function (Student) {
+    return new Promise(function (resolve, reject) {
+      DocumentGrantTx.find({StudentID: Student.StudentID}).exec(async function (error, data) {
         if (error) return resolve({
           "status": false,
           "Request": error

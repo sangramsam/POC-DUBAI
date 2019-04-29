@@ -4,6 +4,7 @@ var Cert = require('../models/cert');
 var CertUser = require('../models/certuser');
 var queries = require('../query/certQueries');
 var certTransaction = require('../query/certTx');
+var grantTransaction = require('../query/grantTx');
 router.get('/getCert', function (req, res, next) {
     Cert.find({}).exec(async function (err, data) {
         if (err) {
@@ -94,12 +95,14 @@ router.post('/registerStudent', async function (req, res, next) {
 router.post('/additionalCourse', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let student = await queries.saveAdditionalCourse(req.body);
+     grantTransaction.createAdditionalDocument(student.student);
     return res.status(200).send(student);
 });
 
 router.post('/approveAdditionalCourse', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let student = await queries.approveAdditionalCourse(req.body);
+     grantTransaction.createAdditionalDocument(student.approve);
     return res.status(200).send(student);
 });
 router.post('/approveRegistration', async function (req, res, next) {
@@ -125,16 +128,20 @@ router.get('/getMyAdditionalCourses', async function (req, res, next) {
 router.post('/documentGrantRequest', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let student = await queries.saveDocumentGrant(req.body);
+    //console.log("student", student)
+    grantTransaction.createGrantDocumentsTx(student.grant);
     return res.status(200).send(student);
 });
 router.post('/documentGrantRequestApprove', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let student = await queries.approveDocumentGrant(req.body);
+     grantTransaction.createGrantDocumentsTx(student.grant);
     return res.status(200).send(student);
 });
 router.post('/documentGrantRequestRevoke', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let student = await queries.revokeDocumentGrant(req.body);
+     grantTransaction.createGrantDocumentsTx(student.grant);
     return res.status(200).send(student);
 });
 router.get('/getGranttedUserList', async function (req, res, next) {
@@ -150,6 +157,16 @@ router.get('/getGranttedUserList', async function (req, res, next) {
 router.get('/getMyGranttedList', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
     let student = await queries.getMyGranttedList(req.query);
+    return res.status(200).send(student);
+});
+router.get('/getMyGranttedListTX', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getMyGranttedListTX(req.query);
+    return res.status(200).send(student);
+});
+router.get('/getMyDocumentListTX', async function (req, res, next) {
+    if (!req.body) return res.status(500).send("Invalid Inputs!");
+    let student = await queries.getMyDocumentListTX(req.query);
     return res.status(200).send(student);
 });
 

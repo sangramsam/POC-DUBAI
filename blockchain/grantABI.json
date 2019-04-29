@@ -1,0 +1,164 @@
+[
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "student",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "StudentName",
+				"type": "string"
+			},
+			{
+				"name": "StudentDocument",
+				"type": "string"
+			}
+		],
+		"name": "createStudentSchool",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "grants",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "GrantDocument",
+				"type": "string"
+			}
+		],
+		"name": "createGrantDocuments",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "adds",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "AdditionalDocuments",
+				"type": "string"
+			},
+			{
+				"name": "Message",
+				"type": "string"
+			}
+		],
+		"name": "createAdditonalDocument",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "student",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "StudentName",
+				"type": "string"
+			},
+			{
+				"name": "StudentDocument",
+				"type": "string"
+			},
+			{
+				"name": "UniversityDocument",
+				"type": "string"
+			}
+		],
+		"name": "createStudentUniversity",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"constant": false,
+		"inputs": [
+			{
+				"name": "student",
+				"type": "bytes32[]"
+			},
+			{
+				"name": "StudentName",
+				"type": "string"
+			},
+			{
+				"name": "StudentDocument",
+				"type": "string"
+			},
+			{
+				"name": "ComapanyDocument",
+				"type": "string"
+			}
+		],
+		"name": "createStudentCompany",
+		"outputs": [],
+		"payable": false,
+		"stateMutability": "nonpayable",
+		"type": "function"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "msg",
+				"type": "bytes32"
+			}
+		],
+		"name": "schoolAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "msg",
+				"type": "bytes32"
+			}
+		],
+		"name": "univerisityAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "msg",
+				"type": "bytes32"
+			}
+		],
+		"name": "companyAdded",
+		"type": "event"
+	},
+	{
+		"anonymous": false,
+		"inputs": [
+			{
+				"indexed": false,
+				"name": "msg",
+				"type": "bytes32"
+			}
+		],
+		"name": "granrAdded",
+		"type": "event"
+	}
+]
