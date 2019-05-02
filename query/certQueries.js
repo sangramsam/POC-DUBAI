@@ -406,7 +406,7 @@ var queries = {
   },
   revokeDocumentGrant: function (data) {
     return new Promise(function (resolve, reject) {
-      DocumentGrant.findOneAndUpdate({StudentID: data.StudentID},
+      DocumentGrant.findOneAndUpdate({StudentID: data.StudentID, grantId: data.grantId},
         {
           $set: {
             grantStatus: false
