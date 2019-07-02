@@ -176,12 +176,25 @@ var queries = {
   },
   getBlockExplorer: function () {
     return new Promise(function (resolve, reject) {
-      var promises = [
-        School.find().sort({"createdAt": -1}).where({SchoolTx: {$exists: true}}).exec()]
+      var promises = [School.find().sort({"createdAt": -1}).where({SchoolTx: {$exists: true}}).exec()]
       q.all(promises).then(function (result) {
           // console.log("result", result);
           let totalResult = result[0]
           resolve(totalResult)
+        }
+      )
+    });
+  },
+  getBlockExplorerAdditional: function () {
+    return new Promise(function (resolve, reject) {
+      var promises = [
+        School.find().sort({"createdAt": -1}).where({SchoolTx: {$exists: true}}).exec(),
+        DocumentGrantTx.find().sort({"createdAt": -1}).where({grantTx: {$exists: true}}).exec(),
+        StudentAdditionalTx.find().sort({"createdAt": -1}).where({docTx: {$exists: true}}).exec()]
+         q.all(promises).then(function (result) {
+          // console.log("result", result);
+          //let totalResult = result[0];
+          resolve(_.flatten(result))
         }
       )
     });
@@ -317,7 +330,10 @@ var queries = {
   },
   getGranttedUserList: function (Student) {
     return new Promise(function (resolve, reject) {
-      DocumentGrant.find({StudentID: Student.StudentID, grantDocument: Student.grantDocument}).exec(async function (error, data) {
+      DocumentGrant.find({
+        StudentID: Student.StudentID,
+        grantDocument: Student.grantDocument
+      }).exec(async function (error, data) {
         if (error) return resolve({
           "status": false,
           "Request": error
@@ -406,7 +422,7 @@ var queries = {
   },
   revokeDocumentGrant: function (data) {
     return new Promise(function (resolve, reject) {
-      DocumentGrant.findOneAndUpdate({ grantId: data.grantId},
+      DocumentGrant.findOneAndUpdate({grantId: data.grantId},
         {
           $set: {
             grantStatus: false
