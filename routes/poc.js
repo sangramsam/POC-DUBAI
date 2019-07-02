@@ -36,6 +36,7 @@ router.post('/addBlockchain', async function (req, res, next) {
 });
 router.post('/addUser', async function (req, res, next) {
     if (!req.body) return res.status(500).send("Invalid Inputs!");
+    console.log('req.body',req.body)
     let user = await queries.saveUser(req.body);
     return res.status(200).send(user);
 });

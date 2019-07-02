@@ -118,7 +118,7 @@ var queries = {
         });
     },
     saveBuilding: function (data) {
-        console.log("saveBuilding called");
+        //console.log("saveBuilding called");
         return new Promise(function (resolve, reject) {
             Building.create(data, function (error, data) {
                 if (error) return resolve({

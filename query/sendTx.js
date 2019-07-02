@@ -7,11 +7,11 @@ const Zoning = require('../models/Zoning');
 var ObjectId = require('mongodb').ObjectId;
 web3js = new web3(new web3.providers.HttpProvider("https://ropsten.infura.io/v3/7df47f101f15415d8fc4b729e9ed53a6"));
 const ABI = require('../blockchain/pocABI')
-const myPrivateKey = "DEE7895AF973BAEF1ACEA5F7A38A261B6B9B4A2534B390855119FAB832A0D78F";
+const myPrivateKey = "4B8F90BE3B74B677A2CC3109B9E757F3987012DC9E81B702818FB2DD0B82B1A7";
 var sendTransaction = {
     sendMakaniTX: function (data) {
         var myAddress = data.address;
-        var privateKey = Buffer.from(data.myPrivateKey, 'hex')
+        var privateKey = Buffer.from(myPrivateKey, 'hex')
         var toAddress = 'ADRESS_TO_SEND_TRANSACTION';
         //contract abi is the array that you can get from the ethereum wallet or etherscan
         var contractABI = ABI;
@@ -61,7 +61,7 @@ var sendTransaction = {
     sendBuilingTX: function (data) {
         return new Promise(function (resolve, reject) {
             var myAddress = data.address;
-            var privateKey = Buffer.from(data.myPrivateKey, 'hex')
+            var privateKey = Buffer.from(myPrivateKey, 'hex')
             var toAddress = 'ADRESS_TO_SEND_TRANSACTION';
             //contract abi is the array that you can get from the ethereum wallet or etherscan
             var contractABI = ABI;
@@ -127,7 +127,7 @@ var sendTransaction = {
         console.log("data", data)
         return new Promise(function (resolve, reject) {
             var myAddress = data.address;
-            var privateKey = Buffer.from(data.myPrivateKey, 'hex')
+            var privateKey = Buffer.from(myPrivateKey, 'hex')
             var toAddress = 'ADRESS_TO_SEND_TRANSACTION';
             //contract abi is the array that you can get from the ethereum wallet or etherscan
             var contractABI = ABI;
@@ -209,7 +209,7 @@ var sendTransaction = {
     sendZoningTX: function (data) {
         return new Promise(function (resolve, reject) {
             var myAddress = data.address;
-            var privateKey = Buffer.from(data.myPrivateKey, 'hex')
+            var privateKey = Buffer.from(myPrivateKey, 'hex')
             var toAddress = 'ADRESS_TO_SEND_TRANSACTION';
             //contract abi is the array that you can get from the ethereum wallet or etherscan
             var contractABI = ABI;
